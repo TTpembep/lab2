@@ -1,10 +1,16 @@
+#include "task1.h"
 #include "array.h"
-#include "stack.h"
+//#include "stack.h"
 #include "hash_table.h"
+
 
 int main(int argc, char* argv[]){   // argv[0] = ./dbms
     string query = argv[1];  // argv[1] = --file
-    if (query != "--file"){   
+    if (query == "task1"){
+        taskOneInit();
+        cout << "Task1 completed!" << endl;
+        return 0;
+    }else if (query != "--file"){   
         cout << "Syntaxys error. " << endl;
         return 0;
     }
@@ -41,7 +47,7 @@ int main(int argc, char* argv[]){   // argv[0] = ./dbms
     return 0;
 }
 /*
-g++ main.cpp array.cpp stack.cpp hash_table.cpp -o dbms
+g++ main.cpp array.cpp stack.cpp hash_table.cpp task1.cpp -o lab2
 ./dbms --file flist.data --query 'FPUSHH value'
 ./dbms --file hash.data --query 'HPUSH key1 value1'
 ./dbms --file test.data --query 'PRINT'
