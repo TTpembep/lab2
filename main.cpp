@@ -1,6 +1,7 @@
 #include "task1.h"
 #include "array.h"
 //#include "stack.h"
+#include "set.h"
 #include "hash_table.h"
 
 
@@ -30,7 +31,7 @@ int main(int argc, char* argv[]){   // argv[0] = ./dbms
     if (structType == 'M'){
         arrayInitiate(query, fileName);
     }else if (structType == 'S'){
-        stackInitiate (query, fileName);
+        setInitiate (query, fileName);
     }else if (structType == 'H'){
         hashInitiate (query, fileName);
     }else if (structType == 'P' && query == "RINT"){
@@ -47,9 +48,12 @@ int main(int argc, char* argv[]){   // argv[0] = ./dbms
     return 0;
 }
 /*
-g++ main.cpp array.cpp stack.cpp hash_table.cpp task1.cpp -o lab2
+g++ main.cpp array.cpp stack.cpp hash_table.cpp set.cpp task1.cpp -o lab2
+./lab2 --file test.data --query 'SETADD aboba'
+./lab2 --file test.data --query 'SETDEL aboba'
+./lab2 --file test.data --query 'SET_AT aboba'
+
 ./dbms --file flist.data --query 'FPUSHH value'
 ./dbms --file hash.data --query 'HPUSH key1 value1'
-./dbms --file test.data --query 'PRINT'
 ./dbms --file hash.data --query 'PRINT'
 */
