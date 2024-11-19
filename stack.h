@@ -21,17 +21,38 @@ struct Stack {
     Stack() : top(nullptr) {}
 
     ~Stack() {
+        clear();
+    }
+    void clear(){
         while (top != nullptr) {
             sNode* temp = top;
             top = top->next;
             delete temp;
         }
     }
-
     void push(const string& value) {
-        sNode* newsNode = new sNode(value);
-        newsNode->next = top;
-        top = newsNode;
+        sNode* newNode = new sNode(value);
+        newNode->next = top;
+        top = newNode;
+    }
+
+    void pop() {
+        if (top != nullptr) {
+            sNode* temp = top;
+            top = top->next;
+            delete temp;
+        }
+    }
+
+    string peek() const {
+        if (top != nullptr) {
+            return top->data;
+        }
+        return "";
+    }
+
+    bool isEmpty() const {
+        return top == nullptr;
     }
 
     void remove() {

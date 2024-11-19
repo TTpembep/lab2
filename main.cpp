@@ -9,7 +9,6 @@ int main(int argc, char* argv[]){   // argv[0] = ./dbms
     string query = argv[1];  // argv[1] = --file
     if (query == "task1"){
         taskOneInit();
-        cout << "Task1 completed!" << endl;
         return 0;
     }else if (query != "--file"){   
         cout << "Syntaxys error. " << endl;
@@ -52,6 +51,9 @@ g++ main.cpp array.cpp stack.cpp hash_table.cpp set.cpp task1.cpp -o lab2
 ./lab2 --file test.data --query 'SETADD aboba'
 ./lab2 --file test.data --query 'SETDEL aboba'
 ./lab2 --file test.data --query 'SET_AT aboba'
+
+./lab2 task1
+tasks = ['A', 'B', 'C'], dependencies = [('A', 'B'), ('B', 'C')]
 
 ./dbms --file flist.data --query 'FPUSHH value'
 ./dbms --file hash.data --query 'HPUSH key1 value1'
