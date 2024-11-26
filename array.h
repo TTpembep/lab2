@@ -18,11 +18,11 @@ struct Array {
         capacity = initialCapacity; // Устанавливаем начальную емкость
         data = new string[capacity]; // Выделяем память под массив
     }
-    
+    /*
     ~Array() {  //Деструктор
-        delete[] data;
+        clear();
     }
-
+    */
     void resize() { //Увеличение размера массива в два раза, при заполнении старого
         size_t newCapacity = capacity * 2;
         string* newData = new string[newCapacity]; //Создание нового массива

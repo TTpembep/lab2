@@ -8,88 +8,32 @@
 #include "stack.h"
 #include "array.h"
 using namespace std;
-struct ListNode {
-    string data;
-    ListNode* next;
-    ListNode(const string& value) : data(value), next(nullptr) {}
-};
-
-struct LinkedList {
-    ListNode* head;
-
-    LinkedList() : head(nullptr) {}
-
-    ~LinkedList() {
-        clear();
-    }
-
-    void clear() {
-        while (head != nullptr) {
-            ListNode* temp = head;
-            head = head->next;
-            delete temp;
-        }
-    }
-
-    void add(const string& value) {
-        ListNode* newNode = new ListNode(value);
-        newNode->next = head;
-        head = newNode;
-    }
-
-    bool contains(const string& value) const {
-        ListNode* current = head;
-        while (current != nullptr) {
-            if (current->data == value) {
-                return true;
-            }
-            current = current->next;
-        }
-        return false;
-    }
-
-    void remove(const string& value) {
-        ListNode* current = head;
-        ListNode* prev = nullptr;
-        while (current != nullptr) {
-            if (current->data == value) {
-                if (prev == nullptr) {
-                    head = current->next;
-                } else {
-                    prev->next = current->next;
-                }
-                delete current;
-                return;
-            }
-            prev = current;
-            current = current->next;
-        }
-    }
-};
 
 struct Graph {
-    LinkedList* adjList;
-    int* inDegree;
-    int numTasks;
+    Array* adjList;  //Массив для хранения зависимостей
+    Array* inDegree; //Ммассив для хранения степеней входа задач
+    int numTasks;   //Количество задач
 
     Graph(int numTasks) : numTasks(numTasks) {
-        adjList = new LinkedList[numTasks];
-        inDegree = new int[numTasks];
+        adjList = new Array(numTasks);
+        inDegree = new Array(numTasks);
         for (int i = 0; i < numTasks; ++i) {
-            inDegree[i] = 0;
+            inDegree->push_index("0", i);
         }
     }
 
     ~Graph() {
         clear();
     }
-
     void clear() {
-        adjList->clear();
-        delete[] inDegree;
+        delete adjList;
+        delete inDegree;
+        adjList = nullptr;
+        inDegree = nullptr;
     }
-    int getIndex(const string& task, Array tasks, int numTasks) const {
-        for (int i = 0; i < numTasks; ++i) {
+
+    int getIndex(const string& task, Array tasks) const {
+        for (int i = 0; i < tasks.size; ++i) {
             if (tasks[i] == task) {
                 return i;
             }
@@ -97,19 +41,25 @@ struct Graph {
         return -1;
     }
 
-    void addEdge(const string& from, const string& to, const Array& tasks) {
-        int fromIndex = getIndex(from, tasks, numTasks);
-        int toIndex = getIndex(to, tasks, numTasks);
+    void addEdge(const string& from, const string& to, Array tasks) {
+        int fromIndex = getIndex(from, tasks);
+        int toIndex = getIndex(to, tasks);
         if (fromIndex != -1 && toIndex != -1) {
-            adjList[toIndex].add(from);
-            inDegree[fromIndex]++;
+            adjList->push_index(from, toIndex);
+            string temp;
+            inDegree->get(fromIndex,temp);
+            string result = to_string(stoi(temp) + 1); 
+            inDegree->replace(result, fromIndex);
+            //cout << "u good? ";
         }
     }
 
     bool canFinish(Array tasks) {
         Stack stack;
         for (int i = 0; i < numTasks; ++i) {
-            if (inDegree[i] == 0) {
+            string temp;
+            inDegree->get(i, temp);
+            if (temp == "0") {
                 stack.push(tasks[i]);
             }
         }
@@ -119,19 +69,23 @@ struct Graph {
             string task = stack.peek();
             stack.pop();
             count++;
-
-            int taskIndex = getIndex(task, tasks, numTasks);
-            ListNode* current = adjList[taskIndex].head;
-            while (current != nullptr) {
-                int dependentIndex = getIndex(current->data, tasks, numTasks);
-                inDegree[dependentIndex]--;
-                if (inDegree[dependentIndex] == 0) {
+            int taskIndex = getIndex(task, tasks);
+            string current;
+            adjList->get(taskIndex, current);
+            while (current != "") {
+                int dependentIndex = getIndex(current, tasks);
+                string temp;
+                inDegree->get(dependentIndex, temp);
+                string result = to_string(stoi(temp) - 1);
+                inDegree->replace(result, dependentIndex);
+                if (result == "0") {
                     stack.push(tasks[dependentIndex]);
-                }
-                current = current->next;
+                } cout << "World ";
+                adjList->remove(taskIndex);
+                adjList->get(taskIndex, current);
             }
         }
-        stack.clear();
+        //stack.clear();
         return count == numTasks;
     }
 };

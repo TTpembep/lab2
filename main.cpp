@@ -1,4 +1,5 @@
 #include "task1.h"
+#include "task3.h"
 #include "array.h"
 //#include "stack.h"
 #include "set.h"
@@ -6,9 +7,12 @@
 
 
 int main(int argc, char* argv[]){   // argv[0] = ./dbms
-    string query = argv[1];  // argv[1] = --file
+    /*string query = argv[1];  // argv[1] = --file
     if (query == "task1"){
         taskOneInit();
+        return 0;
+    }else if (query == "task3"){
+        taskThreeInit();
         return 0;
     }else if (query != "--file"){   
         cout << "Syntaxys error. " << endl;
@@ -44,16 +48,22 @@ int main(int argc, char* argv[]){   // argv[0] = ./dbms
         cout << "Syntaxys error. " << endl;
         return 0;
     }
+    */
+    //taskOneInit();
+    //taskThreeInit();
     return 0;
 }
 /*
-g++ main.cpp array.cpp stack.cpp hash_table.cpp set.cpp task1.cpp -o lab2
+g++ main.cpp array.cpp stack.cpp hash_table.cpp set.cpp task1.cpp task3.cpp -o lab2
+./lab2 task1
+tasks = ['A', 'B', 'C'], dependencies = [('A', 'B'), ('B', 'C')]
+
 ./lab2 --file test.data --query 'SETADD aboba'
 ./lab2 --file test.data --query 'SETDEL aboba'
 ./lab2 --file test.data --query 'SET_AT aboba'
 
-./lab2 task1
-tasks = ['A', 'B', 'C'], dependencies = [('A', 'B'), ('B', 'C')]
+./lab2 task3
+ABBACAB BCABB
 
 ./dbms --file flist.data --query 'FPUSHH value'
 ./dbms --file hash.data --query 'HPUSH key1 value1'

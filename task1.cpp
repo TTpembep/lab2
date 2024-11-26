@@ -18,12 +18,11 @@ void taskOneInit() {
         return;
     }getline(ss, item, ']');
     item.erase(0,1);
-    cout << item << endl;
-    stringstream tempSS;
+    stringstream tempSS(item);
     string temp;
-    Array tasks;
+    Array tasks;    //Запись задач
     while (getline(tempSS, temp, '\'')){
-        if (temp != ", "){
+        if (temp.find(',') == string::npos){
             tasks.push_back(temp);
         }
     }
@@ -41,34 +40,31 @@ void taskOneInit() {
         return;
     }getline(ss, item, ']');
     item.erase(0,1);
-    cout << item << endl;
-    tempSS.str(""); //Очищаем поток
-    tempSS << item;
+    stringstream tempss(item);
     temp = "";
-    Array dependencies;
-    while (getline(tempSS, temp, '\'')){
+    Array dependencies; //Запись последовательностей
+    while (getline(tempss, temp, '\'')){
         if (temp[0] != '(' && temp[0] != ',' && temp[0] != ')'){
             dependencies.push_back(temp);
         }
     }
-    int numTasks = tasks.sizeArr() / sizeof(tasks[0]);
-    Graph graph(numTasks);
+    Graph graph(tasks.size);
+    int numDependencies = dependencies.size;
+    string result;
+    string resultScnd;
 
-    //pair<string, string> dependencies[] = {{"A", "B"}, {"B", "C"}};
-    int numDependencies = dependencies.sizeArr() / sizeof(dependencies[0]);
-
-    for (int i = 0; i < (numDependencies - 1); i+=2) {
-        graph.addEdge(dependencies[i], dependencies[i+1], tasks);
+    for (int i = 0; i < (numDependencies-4); i+=2) {
+        dependencies.get(i,result);
+        dependencies.get(i+1,resultScnd);
+        graph.addEdge(result, resultScnd, tasks);
     }
-
     if (graph.canFinish(tasks)) {
         cout << "Возможно. " << endl;
     } else {
         cout << "Невозможно. " << endl;
     }
-    tasks.clear();
-    dependencies.clear();
-    graph.clear();
-
+    //tasks.clear();
+    //dependencies.clear();
+    //graph.clear();
     return;
 }
