@@ -1,5 +1,6 @@
 #include "task1.h"
 #include "task3.h"
+#include "task4.h"
 #include "array.h"
 //#include "stack.h"
 #include "set.h"
@@ -50,11 +51,12 @@ int main(int argc, char* argv[]){   // argv[0] = ./dbms
     }
     */
     //taskOneInit();
-    taskThreeInit();
+    //taskThreeInit();
+    taskFourInit();
     return 0;
 }
 /*
-g++ main.cpp array.cpp stack.cpp hash_table.cpp set.cpp task1.cpp task3.cpp -o lab2
+g++ main.cpp array.cpp stack.cpp hash_table.cpp set.cpp task1.cpp task3.cpp task4.cpp -o lab2
 ./lab2 task1
 tasks = ['A', 'B', 'C'], dependencies = [('A', 'B'), ('B', 'C')]
 
@@ -64,6 +66,15 @@ tasks = ['A', 'B', 'C'], dependencies = [('A', 'B'), ('B', 'C')]
 
 ./lab2 task3
 ABBACAB BCABB
+
+./lab2 task4
+4
+cAnnot
+cannOt
+fOund
+pAge
+thE pAge cAnnot be fouNd -> 2
+thE PAGE cannot be found -> 4
 
 ./dbms --file flist.data --query 'FPUSHH value'
 ./dbms --file hash.data --query 'HPUSH key1 value1'
