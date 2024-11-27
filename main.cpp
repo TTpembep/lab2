@@ -50,7 +50,7 @@ int main(int argc, char* argv[]){   // argv[0] = ./dbms
     }
     */
     //taskOneInit();
-    //taskThreeInit();
+    taskThreeInit();
     return 0;
 }
 /*
