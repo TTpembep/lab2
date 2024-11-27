@@ -50,15 +50,19 @@ int main(int argc, char* argv[]){   // argv[0] = ./dbms
         return 0;
     }
     */
-    //taskOneInit();
+    taskOneInit();
     //taskThreeInit();
-    taskFourInit();
+    //taskFourInit();
     return 0;
 }
 /*
 g++ main.cpp array.cpp stack.cpp hash_table.cpp set.cpp task1.cpp task3.cpp task4.cpp -o lab2
+
 ./lab2 task1
 tasks = ['A', 'B', 'C'], dependencies = [('A', 'B'), ('B', 'C')]
+tasks = ['A', 'B', 'C'], dependencies = [('A', 'B'), ('B', 'A')]
+tasks = ['A', 'B', 'C'], dependencies = [('A', 'B')]
+tasks = ['A', 'B', 'C'], dependencies = [('A', 'B'), ('B', 'D')]
 
 ./lab2 --file test.data --query 'SETADD aboba'
 ./lab2 --file test.data --query 'SETDEL aboba'
@@ -76,7 +80,5 @@ pAge
 thE pAge cAnnot be fouNd -> 2
 thE PAGE cannot be found -> 4
 
-./dbms --file flist.data --query 'FPUSHH value'
-./dbms --file hash.data --query 'HPUSH key1 value1'
-./dbms --file hash.data --query 'PRINT'
+
 */

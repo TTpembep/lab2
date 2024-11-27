@@ -50,6 +50,12 @@ struct Stack {
         }
         return "";
     }
+    string checkPrev() const{
+        if (top != nullptr && top->next != nullptr){
+            return top->next->data;
+        }
+        return "";
+    }
 
     bool isEmpty() const {
         return top == nullptr;
