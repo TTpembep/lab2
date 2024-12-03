@@ -1,21 +1,25 @@
 #include "task1.h"
+#include "set.h"
 #include "task3.h"
 #include "task4.h"
-#include "array.h"
-//#include "stack.h"
-#include "set.h"
-#include "hash_table.h"
-
+#include "task6.h"
 
 int main(int argc, char* argv[]){   // argv[0] = ./dbms
-    /*string query = argv[1];  // argv[1] = --file
+    string query = argv[1];  // argv[1] = --file
     if (query == "task1"){
         taskOneInit();
         return 0;
     }else if (query == "task3"){
         taskThreeInit();
         return 0;
-    }else if (query != "--file"){   
+    }else if (query == "task4"){
+        taskFourInit();
+        return 0;
+    }else if (query == "task6"){
+        taskSixInit();
+        return 0;
+    }
+    else if (query != "--file"){   
         cout << "Syntaxys error. " << endl;
         return 0;
     }
@@ -36,8 +40,6 @@ int main(int argc, char* argv[]){   // argv[0] = ./dbms
         arrayInitiate(query, fileName);
     }else if (structType == 'S'){
         setInitiate (query, fileName);
-    }else if (structType == 'H'){
-        hashInitiate (query, fileName);
     }else if (structType == 'P' && query == "RINT"){
         ifstream file("containers/" + fileName);
         string result;
@@ -49,14 +51,15 @@ int main(int argc, char* argv[]){   // argv[0] = ./dbms
         cout << "Syntaxys error. " << endl;
         return 0;
     }
-    */
-    taskOneInit();
+    //taskOneInit();
     //taskThreeInit();
     //taskFourInit();
+    //taskFiveInit();
+    //taskSixInit();
     return 0;
 }
 /*
-g++ main.cpp array.cpp stack.cpp hash_table.cpp set.cpp task1.cpp task3.cpp task4.cpp -o lab2
+g++ main.cpp array.cpp stack.cpp hash_table.cpp set.cpp task1.cpp task3.cpp task4.cpp task6.cpp -o lab2
 
 ./lab2 task1
 tasks = ['A', 'B', 'C'], dependencies = [('A', 'B'), ('B', 'C')]
@@ -80,5 +83,10 @@ pAge
 thE pAge cAnnot be fouNd -> 2
 thE PAGE cannot be found -> 4
 
+./lab2 task6
+add value
+get value 
+del value
+exit
 
 */

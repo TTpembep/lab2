@@ -5,6 +5,7 @@
 #include <filesystem>
 #include <fstream>
 #include <string>
+
 using namespace std;
 
 struct KeyValuePair {   //Элемент хеш-таблицы
@@ -119,6 +120,7 @@ struct HashTable {
         }
         file.close();
     }
+    
 };
 
 void hashInitiate(string file, string actions);
