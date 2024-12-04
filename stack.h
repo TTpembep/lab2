@@ -50,15 +50,59 @@ struct Stack {
         }
         return "";
     }
-    string checkPrev() const{
-        if (top != nullptr && top->next != nullptr){
-            return top->next->data;
-        }
-        return "";
-    }
 
     bool isEmpty() const {
         return top == nullptr;
+    }
+
+    Stack(const Stack& other) : top(nullptr) {  //Конструктор копирования.
+        if (other.top != nullptr) {
+            sNode* current = other.top;
+            while (current != nullptr) {
+                push(current->data);
+                current = current->next;
+            }
+            // Переворачиваем стек, чтобы сохранить порядок элементов
+            sNode* prev = nullptr;
+            sNode* current1 = top;
+            sNode* next = nullptr;
+            while (current1 != nullptr) {
+                next = current1->next;
+                current1->next = prev;
+                prev = current1;
+                current1 = next;
+            }
+            top = prev;
+        }
+    }
+
+    Stack& operator=(const Stack& other) {  //Оператор присваивания копированием.
+        if (this == &other) {
+            return *this;
+        }
+
+        clear();
+
+        if (other.top != nullptr) {
+            sNode* current = other.top;
+            while (current != nullptr) {
+                push(current->data);
+                current = current->next;
+            }
+            // Переворачиваем стек, чтобы сохранить порядок элементов
+            sNode* prev = nullptr;
+            sNode* current1 = top;
+            sNode* next = nullptr;
+            while (current1 != nullptr) {
+                next = current1->next;
+                current1->next = prev;
+                prev = current1;
+                current1 = next;
+            }
+            top = prev;
+        }
+
+        return *this;
     }
 
     void remove() {

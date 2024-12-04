@@ -9,6 +9,7 @@
 #include "array.h"
 using namespace std;
 
+bool isDepPossible(char dep1, char dep2, Stack tasks);
 void taskOneInit();
 
 #endif

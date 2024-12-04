@@ -1,10 +1,28 @@
 #include "task1.h"
 
+bool isDepPossible(char dep1, char dep2, Stack tasks){
+    char temp1 = ' ';
+    char temp2 = ' ';
+    while (!tasks.isEmpty()){   //Пока стек не пустой.
+        if ((tasks.peek())[0] == dep1 || (tasks.peek())[0] == dep2){    //Если взятое значение равно одному из нужных.
+            if (temp1 == ' ') {temp1 = (tasks.peek())[0];}  //Присваиваем в пустую временную ячейку.
+            else if (temp2 == ' ') {temp2 = (tasks.peek())[0];}
+        }
+
+        if (temp1 == dep1 && temp2 == dep2) {return true;}  //Случай верной зависимости.
+        else if (temp1 == dep2 && temp2 == dep1) {return false;}    //Случай не верной зависимости.
+
+        tasks.pop();    //Убираем проверенный элемент из стека.
+    }
+    return false;   //Для остальных случаев.
+}
+
+
 void taskOneInit() {
     cout << "Введите задачи и их зависимости" << endl;
     cout << "Формат: tasks = ['A', 'B', 'C'], dependencies = [('A', 'B'), ('B', 'C')]" << endl;
     cout << "Запрос: ";
-    string query;   // Обработка входного запроса
+    string query;   //Обработка входного запроса.
     getline(cin, query);
     stringstream ss(query);
     string item;
@@ -21,11 +39,11 @@ void taskOneInit() {
     getline(ss, item, ']');
     item.erase(0, 1);
     stringstream tempSS(item);
-    string temp;
-    Array tasks;    // Запись задач
+    string temp;  
+    Stack tasks;    //Запись задач.
     while (getline(tempSS, temp, '\'')) {
         if (temp.find(',') == string::npos) {
-            tasks.push_back(temp);
+            tasks.push(temp);
         }
     }
     getline(ss, item, ' ');
@@ -47,55 +65,23 @@ void taskOneInit() {
     item.erase(0, 1);
     stringstream tempss(item);
     temp = "";
-    Array dependencies; // Запись последовательностей
+    string dependencies;    //Запись зависимостей.
     while (getline(tempss, temp, '\'')) {
         if (temp[0] != '(' && temp[0] != ',' && temp[0] != ')') {
-            dependencies.insert(temp);
+            dependencies += temp;
         }
     }
 
-    Stack st;   //Заполнение стека
-    for (int i = 0; i < tasks.size; i++){
-        string result;
-        tasks.get(i, result);
-        st.push(result);
-    }
+    for (int i = (dependencies.length() - 1); i >= 0; i -= 2){
+        char dep1 = dependencies[i];    //Берём одну зависимость.
+        char dep2 = dependencies[i -1];
 
-    bool isPossible = false;
-    bool depthRecursionTracker = false;
-    while (!st.isEmpty()){  //Пока стек не пустой проверяем
-        for (int i = 0; i < (dependencies.size - 1) ; i = i + 2){
-            string firstTask;
-            string secondTask;
-            dependencies.get(i, firstTask);
-            dependencies.get(i+1, secondTask);
-            cout << firstTask << " " << st.peek() << " " << secondTask << " " << st.checkPrev() << "\n";
-            if (firstTask == st.peek() && secondTask == st.checkPrev()){
-                isPossible = true;  //Продолжаем если зависимость верна
-                st.pop();
-            }else if(st.peek() == "" || st.checkPrev() == "") {
-                break;
-            }else {
-                isPossible = false;
-                if (depthRecursionTracker == true){
-                    cout << "Невозможно. \n";
-                    return; //Останавливаем если не верна 
-                }
-            }
+        Stack temp = tasks; //Создаем временный стек копированием.
+        if (!isDepPossible(dep1, dep2, temp)){  //Проверяем на возможность.
+            cout << "Impossible tasks combination. \n";
+            return;
         }
-        if (isPossible == false){
-            st.pop();   //Отслеживаем глубокую рекурсию
-            depthRecursionTracker = true;
-        }
-        if (st.checkPrev() == "") {st.pop();}
-    }
-
-    if (isPossible){
-        cout << "Возможно. \n";
-        return;
-    }else{
-        cout << "Невозможно. \n";
-        return;
-    }
-    
+    }   //Если все прошли проверку - ввод верный.
+    cout << "Possible tasks combination. \n";
+    return;
 }
